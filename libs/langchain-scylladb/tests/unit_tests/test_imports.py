@@ -20,6 +20,7 @@ _EXPECTED_ALL = [
     "ScyllaDBSemanticCache",
     "ScyllaDBStore",
     "ScyllaDBByteStore",
+    "ScyllaDBDocStore",
     "create_vector_index",
     "drop_vector_index",
     "create_secondary_index",
