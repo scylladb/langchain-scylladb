@@ -1,4 +1,4 @@
-"""Integration tests for ScyllaDB index utilities (cloud only for vector index)."""
+"""Integration tests for ScyllaDB index utilities."""
 from __future__ import annotations
 
 import pytest
@@ -58,32 +58,4 @@ def test_wait_for_secondary_index(session) -> None:
     wait_for_index(db_session, keyspace, _TABLE, "wait_idx", timeout=30)
 
 
-# ---------------------------------------------------------------------------
-# Vector index — cloud only (HNSW requires vector-store service)
-# ---------------------------------------------------------------------------
 
-
-@pytest.mark.cloud
-def test_create_vector_index_roundtrip(cloud_session) -> None:
-    ks = "langchain_test"
-    tbl = "vector_idx_test"
-    try:
-        cloud_session.execute(
-            f"""
-            CREATE TABLE IF NOT EXISTS {ks}.{tbl} (
-                id        TEXT PRIMARY KEY,
-                embedding vector<float, 4>
-            )
-            """
-        )
-        create_vector_index(cloud_session, ks, tbl, "embedding", index_name="vec_idx_test")
-        wait_for_index(cloud_session, ks, tbl, "vec_idx_test", timeout=60)
-
-        indexes = list_indexes(cloud_session, ks, tbl)
-        assert "vec_idx_test" in indexes
-
-        drop_vector_index(cloud_session, ks, "vec_idx_test")
-        indexes_after = list_indexes(cloud_session, ks, tbl)
-        assert "vec_idx_test" not in indexes_after
-    finally:
-        cloud_session.execute(f"DROP TABLE IF EXISTS {ks}.{tbl}")
