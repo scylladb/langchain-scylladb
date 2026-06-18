@@ -7,7 +7,7 @@ from langchain_scylladb.index import (
     list_indexes,
     wait_for_index,
 )
-from langchain_scylladb.storage import ScyllaDBByteStore, ScyllaDBStore
+from langchain_scylladb.storage import ScyllaDBByteStore, ScyllaDBDocStore, ScyllaDBStore
 from langchain_scylladb.vectorstores import ScyllaDBVectorStore
 
 __all__ = [
@@ -17,6 +17,7 @@ __all__ = [
     "ScyllaDBSemanticCache",
     "ScyllaDBStore",
     "ScyllaDBByteStore",
+    "ScyllaDBDocStore",
     "create_vector_index",
     "drop_vector_index",
     "create_secondary_index",

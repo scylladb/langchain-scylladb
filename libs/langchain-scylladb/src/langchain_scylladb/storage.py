@@ -13,6 +13,7 @@ from typing import (
     Tuple,
 )
 
+from langchain_core.documents import Document
 from langchain_core.stores import BaseStore, ByteStore
 
 from cassandra.cluster import Session
@@ -159,4 +160,32 @@ class ScyllaDBByteStore(_ScyllaDBStoreMixin, ByteStore):
 
     def _encode_value(self, value: bytes) -> str:
         return base64.b64encode(value).decode("ascii")
+
+
+class ScyllaDBDocStore(_ScyllaDBStoreMixin, BaseStore):
+    """ScyllaDB-backed store for :class:`langchain_core.documents.Document` objects.
+
+    Documents are serialised as JSON (``page_content`` + ``metadata``).
+
+    Args:
+        session: An open ``cassandra.cluster.Session``.
+        keyspace: ScyllaDB keyspace (must already exist).
+        table_name: Table name within the keyspace.
+    """
+
+    def __init__(
+        self,
+        session: Session,
+        *,
+        keyspace: str = "langchain_scylladb",
+        table_name: str = "doc_store",
+    ) -> None:
+        self._init_mixin(session, keyspace, table_name)
+
+    def _decode_value(self, value: str) -> Document:
+        data = json.loads(value)
+        return Document(page_content=data["page_content"], metadata=data.get("metadata", {}))
+
+    def _encode_value(self, value: Document) -> str:
+        return json.dumps({"page_content": value.page_content, "metadata": value.metadata})
 
