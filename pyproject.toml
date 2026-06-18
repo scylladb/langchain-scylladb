@@ -1,5 +1,6 @@
 [project]
 name = "langchain-scylladb-monorepo"
+version = "0.0.0"
 description = "LangChain ScyllaDB mono-repo"
 readme = "README.md"
 requires-python = ">=3.11"
