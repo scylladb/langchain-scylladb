@@ -1,3 +1,4 @@
-# ScyllaDB LangChain and LangGraph integrations
+# ScyllaDB LangChain integration
 
-Work in progress...
+This repository contains the following integrations:
+* langgraph-checkpoint-scylladb

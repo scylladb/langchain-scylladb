@@ -1,0 +1,40 @@
+[project]
+name = "langgraph-checkpoint-scylladb"
+version = "0.1.0"
+description = "ScyllaDB checkpointer for LangGraph"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langgraph-checkpoint>=4.0.3,<5.0.0",
+    "scylla-driver>=3.29.10",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.4.0",
+    "python-dotenv>=1.2.2",
+    "langgraph>=1.2.4",
+    "testcontainers>=4.9.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/scylladb/langchain-scylladb"
+"Source" = "https://github.com/scylladb/langchain-scylladb/tree/main/libs/langgraph-checkpoint-scylladb"
+"Issues" = "https://github.com/scylladb/langchain-scylladb/issues"
+"PyPI" = "https://pypi.org/project/langgraph-checkpoint-scylladb/"
+
+[build-system]
+requires = ["hatchling>1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["langgraph"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+log_format = "%(asctime)s.%(msecs)03d %(levelname)s [%(module)s:%(lineno)s]: %(message)s"
+log_level = "DEBUG"
+log_date_format = "%Y-%m-%d %H:%M:%S"
+xfail_strict = true
+addopts = "-rf"
