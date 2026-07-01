@@ -43,6 +43,7 @@ jobs:
         with:
           skip-existing: true
           packages-dir: libs/langchain-scylladb/dist
+          attestations: false
 
   publish-langgraph-checkpoint-scylladb:
     name: "Publish langgraph-checkpoint-scylladb"
@@ -71,3 +72,4 @@ jobs:
         with:
           skip-existing: true
           packages-dir: libs/langgraph-checkpoint-scylladb/dist
+          attestations: false
